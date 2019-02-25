@@ -9,9 +9,6 @@ def unify(E1, E2):
     SUBSET = ""
     if not E1_Variable and not E2_Variable or(len(E1) == 0 and len(E2) == 0):
         if E1[0] == E2[0]:
-            # print(E1[0])
-            # print(E2[0])
-            # print("EMPTY")
             E1 = remove_char(E1,0)
             E2 = remove_char(E2,0)
         else:
@@ -22,7 +19,6 @@ def unify(E1, E2):
             print("FAIL")
             return "FAIL"
         else:
-            # print(E2[0] + "/" + E1[0])
             SUBSET = E2[0] + "/" + E1[0]
             return SUBSET
     if E2_Variable:
@@ -30,16 +26,12 @@ def unify(E1, E2):
             print("FAIL")
             return "FAIL"
         else:
-            # print(E1[0] + "/" + E2[0])
             SUBSET = E1[0] + "/" + E2[0]
             return SUBSET
     if E1[0] == "" or E2[0] == "":
         print("FAIL")
         quit()
     else:
-        # print(SUBSET)
-        # print(E1)
-        # print(E2)
         HE1 = E1[0]
         HE2 = E2[0]
         SUBS1 = unify(HE1,HE2)
@@ -49,19 +41,14 @@ def unify(E1, E2):
         temp = SUBS1.split("/")
         if temp[1] == E1[1]:
             TE1 = temp[0]
-            # print("TE1 " + TE1)
         if temp[1] != E1[1]:
             TE1 = E1[1]
-            # print("TE1 " + TE1)
         if temp[1] == E2[1]:
             TE2 = temp[0]
-            # print("TE2 " + TE2)
         if temp[1] != E2[1]:
             TE2 = E2[1]
-            # print("TE2 " + TE2)
         SUBS2 = unify(TE1,TE2)
         if SUBS2 == "FAIL":
-            # print("SUBS2: FAILED")
             quit()
         else:
             print(SUBS1 + ", " + SUBS2 )
