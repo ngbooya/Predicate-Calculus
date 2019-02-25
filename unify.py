@@ -1,38 +1,71 @@
+def remove_char(str,n):
+    first_part = str[:n]
+    last_part = str[n+1:]
+    return first_part + last_part
 
-import re
+def unify(E1, E2):
+    E1_Variable = E1[0].isupper()
+    E2_Variable = E2[0].isupper()
+    SUBSET = ""
+    if not E1_Variable and not E2_Variable or(len(E1) == 0 and len(E2) == 0):
+        if E1[0] == E2[0]:
+            # print(E1[0])
+            # print(E2[0])
+            # print("EMPTY")
+            E1 = remove_char(E1,0)
+            E2 = remove_char(E2,0)
+        else:
+            print("FAIL")
+            return "FAIL"
+    if E1_Variable:
+        if E1[0] in E2[0]:
+            print("FAIL")
+            return "FAIL"
+        else:
+            # print(E2[0] + "/" + E1[0])
+            SUBSET = E2[0] + "/" + E1[0]
+            return SUBSET
+    if E2_Variable:
+        if E2[0] in E1[0]:
+            print("FAIL")
+            return "FAIL"
+        else:
+            # print(E1[0] + "/" + E2[0])
+            SUBSET = E1[0] + "/" + E2[0]
+            return SUBSET
+    if E1[0] == "" or E2[0] == "":
+        print("FAIL")
+        quit()
+    else:
+        # print(SUBSET)
+        # print(E1)
+        # print(E2)
+        HE1 = E1[0]
+        HE2 = E2[0]
+        SUBS1 = unify(HE1,HE2)
+        if SUBS1 == "FAIL":
+            print("SUBS1: FAILED")
+            quit()
+        temp = SUBS1.split("/")
+        if temp[1] == E1[1]:
+            TE1 = temp[0]
+            # print("TE1 " + TE1)
+        if temp[1] != E1[1]:
+            TE1 = E1[1]
+            # print("TE1 " + TE1)
+        if temp[1] == E2[1]:
+            TE2 = temp[0]
+            # print("TE2 " + TE2)
+        if temp[1] != E2[1]:
+            TE2 = E2[1]
+            # print("TE2 " + TE2)
+        SUBS2 = unify(TE1,TE2)
+        if SUBS2 == "FAIL":
+            # print("SUBS2: FAILED")
+            quit()
+        else:
+            print(SUBS1 + ", " + SUBS2 )
 
-def main():
-
-    E1 = ["p","X","X"]
-    E2 = ["p","a","b"]
-    unifyresults = []
-
-
-    for count in range(len(E1)):
-
-        print("unify(" + E1[count][0] + ", " + E2[count][0] + ")")
-        E1_Variable = E1[count][0].isupper()
-        E2_Variable = E2[count][0].isupper()
-        # print(str(E1_Variable) + str(E2_Variable))
-
-        if not E1_Variable and not E2_Variable or (len(E1) == 0 and len(E2)== 0):
-            if E1[count] == E2[count]:
-                unifyresults.append("EMPTY")
-            else:
-                unifyresults.append("FAIL")
-        if E1_Variable:
-            if E1[count] in E2[count]:
-                unifyresults.append("FAIL")
-            else:
-                unifyresults.append(E2[count]+"/"+E1[count])
-        if E2_Variable:
-            if E2[count] in E1[count]:
-                unifyresults.append("FAIL")
-            else:
-                unifyresults.append(E1[count]+"/"+E2[count])
-
-
-
-    print(unifyresults)
-
-main()
+list1 = "pXX"
+list2 = "pab"
+unify(list1, list2)
